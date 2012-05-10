@@ -1,15 +1,19 @@
 var express = require('express'),
-    app;
+    fs = require('fs'),
+    app,
+    mode = 'production';
+    //mode = 'development';
 
 global.nap = require('nap');
 
 nap({
-    //mode: 'production',
+    mode: mode,
     publicDir: '/CheatDay/www',
     fingerprint: true,
     assets: {
         js: {
             lib: [
+                '/app/javascripts/lib/cordova.js',
                 '/app/javascripts/lib/require.js',
                 '/app/javascripts/lib/jquery.js',
                 '/app/javascripts/lib/underscore.js',
@@ -37,7 +41,7 @@ nap({
     }
 });
 
-//nap['package']();
+nap['package']();
 
 app = module.exports = express.createServer();
 
@@ -63,6 +67,14 @@ app.configure('production', function() {
 });
 
 app.get('/', function(req, res) {
+    res.render('index', {
+        title: 'Express'
+    }, function(error, contents){
+        if (mode === 'production')
+        {
+            fs.writeFileSync('CheatDay/www/index.html', contents != null ? contents : '');
+        }
+    });
     return res.render('index', {
         title: 'Express'
     });
