@@ -1,14 +1,14 @@
 var express = require('express'),
     fs = require('fs'),
-    app,
-    mode = 'production';
-    //mode = 'development';
+    request = require('request'),
+    app;
 
 global.nap = require('nap');
 
 nap({
-    mode: mode,
+    //mode: mode,
     publicDir: '/CheatDay/www',
+    cdnUrl: 'assets/',
     fingerprint: true,
     assets: {
         js: {
@@ -41,7 +41,7 @@ nap({
     }
 });
 
-nap['package']();
+//nap['package']();
 
 app = module.exports = express.createServer();
 
@@ -63,18 +63,15 @@ app.configure('development', function() {
 });
 
 app.configure('production', function() {
+    request('http://127.0.0.1:3002/', function(error, response, body){
+        if (!error && response.statusCode == 200) {
+            fs.writeFileSync('CheatDay/www/index.html', body != null ? body : '');
+        }
+    });
     return app.use(express.errorHandler());
 });
 
 app.get('/', function(req, res) {
-    res.render('index', {
-        title: 'Express'
-    }, function(error, contents){
-        if (mode === 'production')
-        {
-            fs.writeFileSync('CheatDay/www/index.html', contents != null ? contents : '');
-        }
-    });
     return res.render('index', {
         title: 'Express'
     });

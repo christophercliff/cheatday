@@ -4,6 +4,7 @@
     "dependencies": {
         "nap": "*",
         "express": "*",
-        "jade": "*"
+        "jade": "*",
+        "request": "*"
     }
 }
