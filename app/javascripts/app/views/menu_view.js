@@ -1,10 +1,8 @@
 (function(){
     
-    var isCreating = false;
-    
-    window.CreateView = Backbone.View.extend({
+    window.MenuView = Backbone.View.extend({
         
-        className: 'create',
+        className: 'menu',
         
         events: {
             'click': 'click',

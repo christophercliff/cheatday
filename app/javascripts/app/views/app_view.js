@@ -46,7 +46,7 @@
             });
             
             self.$el
-                .append(new CreateView({
+                .append(new MenuView({
                     collection: self.collection,
                     app: self.model
                 }).render().el)
