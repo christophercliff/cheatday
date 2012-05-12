@@ -2,76 +2,80 @@
 @on: #68deac;
 @locked: #f95a54;
 
-.vice {
-    -webkit-user-select: none;
-    -webkit-transition: all 0.1s ease;
-    -webkit-perspective: 0;
-    -webkit-backface-visibility: hidden;
-    position: relative;
-    height: 59px;
-    padding-bottom: 1px;
+.vice-collection {
+    position: absolute; left: 0; top: 0; z-index: 1;
+    width: 100%;
 }
-    .vice-name {
+    .vice {
         -webkit-user-select: none;
         -webkit-transition: all 0.1s ease;
         -webkit-perspective: 0;
         -webkit-backface-visibility: hidden;
-        position: relative; z-index: 2;
-        height: 100%;
-        padding: 0 10px;
+        position: relative;
+        height: 59px;
+        padding-bottom: 1px;
     }
-    .vice-dragging .vice-name {
-        -webkit-transition: all 0 cubic-bezier(0, 0, 0.2, 1);
-    }
-    .vice-off .vice-name {
-        background: @off;
-    }
-    .vice-on .vice-name {
-        background: @on;
-    }
-    .vice-locked .vice-name {
-        background: @locked;
-    }
-    .vice-fade .vice-name {
+        .vice-name {
+            -webkit-user-select: none;
+            -webkit-transition: all 0.1s ease;
+            -webkit-perspective: 0;
+            -webkit-backface-visibility: hidden;
+            position: relative; z-index: 2;
+            height: 100%;
+            padding: 0 10px;
+        }
+        .vice-dragging .vice-name {
+            -webkit-transition: all 0 cubic-bezier(0, 0, 0.2, 1);
+        }
+        .vice-off .vice-name {
+            background: @off;
+        }
+        .vice-on .vice-name {
+            background: @on;
+        }
+        .vice-locked .vice-name {
+            background: @locked;
+        }
+        .vice-fade .vice-name {
         
-    }
-        .vice-name input {
-            width: 100%; height: 100%;
-            padding: 0; margin: 0;
-            color: #fff;
-            background: none;
-            border: none;
-            font-size: 18px; line-height: 59px; font-weight: bold;
         }
-        .vice-name-count {
-            position: absolute; right: 0; top: 0; z-index: 2;
-            width: 59px; height: 100%;
-            text-align: center;
+            .vice-name input {
+                width: 100%; height: 100%;
+                padding: 0; margin: 0;
+                color: #fff;
+                background: none;
+                border: none;
+                font-size: 18px; line-height: 59px; font-weight: bold;
+            }
+            .vice-name-count {
+                position: absolute; right: 0; top: 0; z-index: 2;
+                width: 59px; height: 100%;
+                text-align: center;
+            }
+            .vice-off .vice-name-count {
+                background-color: #1b242d;
+            }
+            .vice-on .vice-name-count {
+                background-color: #00b067;
+            }
+            .vice-locked .vice-name-count {
+                background-color: #a6342e;
+            }
+        .vice-status {
+            position: absolute; left: 0; top: 0;
+            height: 100%;
+            padding: 0 10px;
+            font-weight: normal;
         }
-        .vice-off .vice-name-count {
-            background-color: #1b242d;
+        .vice-off .vice-status {
+            color: @off;
         }
-        .vice-on .vice-name-count {
-            background-color: #00b067;
+        .vice-on .vice-status {
+            color: @on;
         }
-        .vice-locked .vice-name-count {
-            background-color: #a6342e;
+        .vice-locked .vice-status {
+            color: @locked;
         }
-    .vice-status {
-        position: absolute; left: 0; top: 0;
-        height: 100%;
-        padding: 0 10px;
-        font-weight: normal;
-    }
-    .vice-off .vice-status {
-        color: @off;
-    }
-    .vice-on .vice-status {
-        color: @on;
-    }
-    .vice-locked .vice-status {
-        color: @locked;
-    }
-    .vice-fade .vice-status {
-        display: none;
-    }
+        .vice-fade .vice-status {
+            display: none;
+        }

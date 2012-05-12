@@ -46,11 +46,17 @@
             });
             
             self.$el
+                .append(new window.CreateView({
+                    app: self.model
+                }).render().el)
+                ;
+            
+            /*self.$el
                 .append(new MenuView({
                     collection: self.collection,
                     app: self.model
                 }).render().el)
-                ;
+                ;*/
             
             return self;
         },
@@ -67,7 +73,7 @@
         },
         
         change_IsCreating: function () {
-            
+            return;
             var self = this;
             
             if (self.model.get('isCreating'))
