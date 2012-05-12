@@ -39,7 +39,7 @@
                 return -1;
             }
             
-            return 0;
+            return a.get('name') > b.get('name');
         },
         
         has: function (val) {
