@@ -6,8 +6,7 @@
         C_DRAGGING = NAME + '-dragging',
         getClass = function (state) {
             return NAME + ' ' + NAME + '-' + state;
-        },
-        isEditing = false;
+        };
     
     window.ViceView = Backbone.View.extend({
         
@@ -186,7 +185,7 @@
                 dy = e.distanceY;
             
             if (Math.abs(dx) <= 0
-                || isEditing)
+                || self.app.get('isEditing'))
             {
                 return;
             }
