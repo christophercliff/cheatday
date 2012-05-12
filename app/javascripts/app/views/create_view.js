@@ -16,6 +16,7 @@
             
             var self = this;
             
+            self.app = self.options.app;
             self.collection = self.options.collection;
             
             return;
@@ -37,13 +38,16 @@
             
             var self = this;
             
-            if (isCreating)
+            if (self.app.get('isEditing')
+                || self.app.get('isCreating'))
             {
                 return;
             }
             
-            self.collection
-                .trigger('collection_spread')
+            self.app
+                .set({
+                    isCreating: true
+                })
                 ;
             
             self.$el
@@ -63,15 +67,15 @@
             var self = this,
                 val = self.$('input').val();
             
-            isCreating = false;
+            self.app
+                .set({
+                    isCreating: false
+                })
+                ;
             
             self.$el
                 .removeClass(self.className + '-focus')
                 .html('+')
-                ;
-            
-            self.collection
-                .trigger('collection_unspread')
                 ;
             
             if (_.isEmpty(val)

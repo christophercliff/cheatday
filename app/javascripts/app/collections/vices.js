@@ -12,8 +12,6 @@
                 .bind('remove', function(){
                     self.sort();
                 }, self)
-                .bind('collection_spread', self.spread, self)
-                .bind('collection_unspread', self.unspread, self)
                 ;
             
             return;

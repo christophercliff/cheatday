@@ -30,28 +30,21 @@ $(function(){
                 used: ['2012-05-01']
             }
         ],
-        vices = new Vices(data),
+        vices = new Vices(),
         appView = new AppView({
+            model: new window.App(),
             collection: vices
         });
     
-    window.$debug = $('<div class="debug"></div>');
-    
     $(document.body)
         .html(appView.render().el)
-        .append(window.$debug)
-        .trigger('indom')
         ;
     
-    //vices.reset(data);
+    vices.reset(data);
     
     document.addEventListener('resume', function(){
         
         vices.reset(data);
-        
-        $(document.body)
-            .trigger('indom')
-            ;
         
     }, false);
     

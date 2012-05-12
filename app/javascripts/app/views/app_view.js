@@ -2,16 +2,22 @@
     
     window.AppView = Backbone.View.extend({
         
-        className: 'application',
+        className: 'app',
         
         initialize: function () {
             
             var self = this;
             
+            self.template = JST[self.className];
             self.collection = self.options.collection;
             
+            self.model
+                .bind('change:isCreating', self.change_IsCreating, self)
+                ;
+            
             self.collection
-                .bind('add', self.add, self)
+                .bind('add reset', self.render, self)
+                .bind('add reset', self.bindTouch, self)
                 ;
             
             return;
@@ -19,17 +25,21 @@
         
         render: function () {
             
-            var self = this;
+            var self = this,
+                $vices;
             
             self.$el
-                .empty()
+                .html(self.template.render())
                 ;
+            
+            $vices = self.$('.vice-collection')
             
             self.collection.each(function(vice){
                 
-                self.$el
+                $vices
                     .append(new ViceView({
-                        model: vice
+                        model: vice,
+                        app: self.model
                     }).render().el)
                     ;
                 
@@ -37,22 +47,37 @@
             
             self.$el
                 .append(new CreateView({
-                    collection: self.collection
+                    collection: self.collection,
+                    app: self.model
                 }).render().el)
                 ;
             
             return self;
         },
         
-        add: function (vice) {
+        bindTouch: function () {
             
             var self = this;
             
-            self.$el
-                .append(new ViceView({
-                    model: vice
-                }).render().el)
+            self.model
+                .trigger('bindTouch')
                 ;
+            
+            return;
+        },
+        
+        change_IsCreating: function () {
+            
+            var self = this;
+            
+            if (self.model.get('isCreating'))
+            {
+                self.collection.spread();
+                
+                return;
+            }
+            
+            self.collection.unspread();
             
             return;
         }

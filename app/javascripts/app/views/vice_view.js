@@ -20,9 +20,10 @@
             
             var self = this;
             
-            _.bindAll(self, 'indom', 'touch');
+            _.bindAll(self, 'touch');
             
             self.template = JST[NAME];
+            self.app = self.options.app;
             
             self.model
                 .bind('change:isSwiping', self.change_isSwiping, self)
@@ -32,18 +33,18 @@
                 .bind('unspread', self.sort, self)
                 ;
             
-            self.$el
-                .attr('class', getClass(self.model.get('state')))
+            self.app
+                .bind('bindTouch', self.bindTouch, self)
                 ;
             
-            $(document.body)
-                .bind('indom', self.indom)
+            self.$el
+                .attr('class', getClass(self.model.get('state')))
                 ;
             
             return;
         },
         
-        indom: function () {
+        bindTouch: function () {
             
             var self = this;
             
@@ -93,8 +94,6 @@
             
             var self = this;
             
-            //window.$debug.html(e.type);
-            
             if (!_.isFunction(self[e.type]))
             {
                 return;
@@ -109,12 +108,17 @@
             
             var self = this;
             
-            if (isEditing)
+            if (self.app.get('isEditing')
+                || self.app.get('isCreating'))
             {
                 return;
             }
             
-            isEditing = true;
+            self.app
+                .set({
+                    isEditing: true
+                })
+                ;
             
             self.$el.siblings('.' + self.className)
                 .css({
@@ -129,8 +133,6 @@
             
             self.$('input')
                 .focus()
-            .get(0)
-                .setSelectionRange(0, 15)
                 ;
             
             return;
@@ -141,7 +143,11 @@
             var self = this,
                 val = self.$('input').val();
             
-            isEditing = false;
+            self.app
+                .set({
+                    isEditing: false
+                })
+                ;
             
             $('.' + self.className + '')
                 .css({
