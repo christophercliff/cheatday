@@ -50,7 +50,7 @@
             
             var self = this;
             
-            self.sort();
+            self.sort({ silent: true });
             
             self.each(function(v, i){
                 

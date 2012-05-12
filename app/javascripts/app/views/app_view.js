@@ -16,8 +16,8 @@
                 ;
             
             self.collection
-                .bind('add reset', self.render, self)
-                .bind('add reset', self.bindTouch, self)
+                .bind('reset add', self.render, self)
+                .bind('reset add', self.bindTouch, self)
                 ;
             
             return;

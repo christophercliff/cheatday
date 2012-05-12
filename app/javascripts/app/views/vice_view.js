@@ -3,6 +3,7 @@
     var NAME = 'vice',
         C_ACTIVE = NAME + '-active',
         C_FADE = NAME + '-fade',
+        C_DRAGGING = NAME + '-dragging',
         getClass = function (state) {
             return NAME + ' ' + NAME + '-' + state;
         },
@@ -190,6 +191,10 @@
                 return;
             }
             
+            self.$el
+                .addClass(C_DRAGGING)
+                ;
+            
             if (dx >= buffer)
             {
                 self.model
@@ -227,6 +232,10 @@
             
             self.$name
                 .css('-webkit-transform', 'translate3d(0, 0, 0)')
+                ;
+            
+            self.$el
+                .removeClass(C_DRAGGING)
                 ;
             
             return;
