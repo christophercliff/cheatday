@@ -11,6 +11,12 @@
             self.template = JST[self.className];
             self.collection = self.options.collection;
             
+            /*self.$el
+                .css({
+                    height: $(window).height() + 'px'
+                })
+                ;*/
+            
             self.model
                 .bind('change:isCreating', self.change_IsCreating, self)
                 ;
@@ -25,14 +31,36 @@
         
         render: function () {
             
-            var self = this,
-                $vices;
+            var self = this;
             
             self.$el
                 .html(self.template.render())
                 ;
             
-            $vices = self.$('.vice-collection')
+            self.renderVices();
+            self.renderCreate();
+            
+            return self;
+        },
+        
+        renderCreate: function () {
+            
+            var self = this;
+            
+            self.$el
+                .append(new window.CreateView({
+                    collection: self.collection,
+                    app: self.model
+                }).render().el)
+                ;
+            
+            return;
+        },
+        
+        renderVices: function () {
+            
+            var self = this,
+                $vices = self.$('.vice-collection');
             
             self.collection.each(function(vice){
                 
@@ -45,20 +73,7 @@
                 
             });
             
-            self.$el
-                .append(new window.CreateView({
-                    app: self.model
-                }).render().el)
-                ;
-            
-            /*self.$el
-                .append(new MenuView({
-                    collection: self.collection,
-                    app: self.model
-                }).render().el)
-                ;*/
-            
-            return self;
+            return;
         },
         
         bindTouch: function () {
