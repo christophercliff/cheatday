@@ -1,6 +1,10 @@
 (function(){
     
-    window.Vices = Backbone.Collection.extend({
+    var name = 'Vices';
+    
+    window[name] = Backbone.Collection.extend({
+        
+        localStorage: new Backbone.LocalStorage(name),
         
         model: Vice,
         

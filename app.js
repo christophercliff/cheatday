@@ -17,6 +17,7 @@ nap({
                 '/app/javascripts/lib/require.js',
                 '/app/javascripts/lib/jquery.js',
                 '/app/javascripts/lib/underscore.js',
+                '/app/javascripts/lib/backbone.js',
                 '/app/javascripts/lib/hammer.js',
                 '/app/javascripts/lib/**/*'
             ],

@@ -169,7 +169,7 @@
                 ;
             
             self.model
-                .set({
+                .save({
                     name: val
                 })
                 ;

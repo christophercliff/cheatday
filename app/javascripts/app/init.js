@@ -40,11 +40,30 @@ $(function(){
         .html(appView.render().el)
         ;
     
-    vices.reset(data);
+    //vices.reset(data);
+    console.log(vices.toJSON());
+    //vices.create(data[0]);
+    //console.log(vices.toJSON());
+    vices.fetch({
+        success: function () {
+            
+            console.log(vices.toJSON());
+            
+            if (false)
+            {
+                console.log('reset');
+                vices.each(function(v){
+                    v.destroy();
+                });
+                vices.create(data[0]);
+            }
+            
+        }
+    })
     
     document.addEventListener('resume', function(){
         
-        vices.reset(data);
+        vices.fetch();
         
     }, false);
     

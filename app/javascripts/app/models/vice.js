@@ -37,8 +37,8 @@
             {
                 state = STATES.locked;
             }
-            
-            self.set({
+            console.log('init', state, self.lastCheat(), self.get('used'));
+            self.save({
                 state: state,
                 status: self.getStatus(state),
                 count: self.cheats()
@@ -64,7 +64,7 @@
         },
         
         lastCheat: function () {
-            return this.get('used')[0];
+            return _.last(this.get('used'));
         },
         
         nextCheat: function () {
@@ -96,22 +96,26 @@
             
             var self = this,
                 state = self.getToggleState(),
-                cheats = self.get('used');
+                used = self.get('used');
             
             if (state === STATES.on)
             {
-                cheats.push(moment().sod().format('YYYY-MM-DD'));
+                used.push(moment().sod().format('YYYY-MM-DD'));
             }
             else
             {
-                cheats.shift();
+                used.pop();
             }
             
-            self.set({
+            self.save({
                 state: state,
-                cheats: cheats,
+                used: used,
                 count: self.cheats(),
                 status: self.getStatus(state)
+            }, {
+                success: function () {
+                    console.log(self.toJSON());
+                }
             });
             
             return;
