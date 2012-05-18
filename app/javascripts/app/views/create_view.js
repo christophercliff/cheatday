@@ -143,7 +143,7 @@
             }
             
             self.collection
-                .add({
+                .create({
                     name: val
                 })
                 ;
