@@ -67,6 +67,7 @@
                 ;
             
             self.$input = self.$('input');
+            self.$toggle = self.$('.create-toggle');
             
             return self;
         },
@@ -74,7 +75,8 @@
         toggle: function () {
             
             var self = this,
-                dy;
+                dy,
+                a;
             
             if (self.isTransitioning)
             {
@@ -90,15 +92,23 @@
             if (self.app.get('isCreating'))
             {
                 dy = 0;
+                a = 45;
             }
             else
             {
                 dy = self.top_0;
+                a = 0;
             }
             
             self.$el
                 .css({
                     '-webkit-transform': 'translate3d(0, ' + dy + 'px, 0)'
+                })
+                ;
+            
+            self.$toggle
+                .css({
+                    '-webkit-transform': 'rotate(' + a + 'deg)'
                 })
                 ;
             
