@@ -8,6 +8,7 @@
         
         events: {
             'click .create-toggle': 'toggle',
+            'submit': 'submit',
             'blur input': 'blur'
         },
         
@@ -133,20 +134,36 @@
             var self = this,
                 val = self.$input.val();
             
-            /*if (val !== ''
-                && !self.collection.has(val))
+            if (val === ''
+                || self.collection.has(val))
             {
-                self.collection
-                    .add({
-                        name: val
-                    })
-                    ;
-            }*/
+                alert('You have already added ' + val);
+                
+                return;
+            }
+            
+            self.collection
+                .add({
+                    name: val
+                })
+                ;
             
             self.toggle();
             
             return;
         },
+        
+        submit: function (e) {
+            e.preventDefault();
+            
+            var self = this;
+            
+            self.$input
+                .blur()
+                ;
+            
+            return;
+        }
         
     });
     
