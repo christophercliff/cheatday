@@ -7,7 +7,6 @@
         tagName: 'form',
         
         events: {
-            'click .create-toggle': 'toggle',
             'submit': 'submit',
             'blur input': 'blur'
         },
@@ -16,7 +15,7 @@
             
             var self = this;
             
-            _.bindAll(self, 'blur', 'transitionStart', 'transitionEnd');
+            _.bindAll(self, 'toggle', 'blur', 'transitionStart', 'transitionEnd');
             
             self.template = JST[self.className];
             self.app = self.options.app;
@@ -31,6 +30,22 @@
                 .css({
                     '-webkit-transform': 'translate3d(0, ' + self.top_0 + 'px, 0)'
                 })
+                ;
+            
+            self.app
+                .bind('bindTouch', self.bindTouch, self)
+                ;
+            
+            return;
+        },
+        
+        bindTouch: function () {
+            
+            var self = this;
+            
+            self.$('.' + self.className + '-toggle')
+                .hammer()
+                .bind('tap', self.toggle)
                 ;
             
             return;
@@ -134,8 +149,12 @@
             var self = this,
                 val = self.$input.val();
             
-            if (val === ''
-                || self.collection.has(val))
+            if (val === '')
+            {
+                return;
+            }
+            
+            if (self.collection.has(val))
             {
                 alert('You have already added ' + val);
                 
