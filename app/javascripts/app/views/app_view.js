@@ -79,22 +79,6 @@
                 ;
             
             return;
-        },
-        
-        change_IsCreating: function () {
-            return;
-            var self = this;
-            
-            if (self.model.get('isCreating'))
-            {
-                self.collection.spread();
-                
-                return;
-            }
-            
-            self.collection.unspread();
-            
-            return;
         }
         
     });
