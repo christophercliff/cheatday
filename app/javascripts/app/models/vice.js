@@ -14,9 +14,8 @@
             state: STATES.off,
             count: 1,
             start: TODAY,
-            used: [],
             cheatsPerRange: 1,
-            range: 7,
+            range: 7
         },
         
         initialize: function () {
@@ -37,7 +36,7 @@
             {
                 state = STATES.locked;
             }
-            console.log('init', state, self.lastCheat(), self.get('used'));
+            
             self.save({
                 state: state,
                 status: self.getStatus(state),
@@ -58,13 +57,21 @@
                 start = moment(self.get('start')).sod(),
                 diff = today.diff(start, 'days'),
                 earned = Math.floor(diff*self.get('cheatsPerRange')/self.get('range')) + 1,
-                used = self.get('used').length;
+                used = _.isArray(self.get('used')) ? self.get('used').length : 0;
             
             return (earned - used < 0) ? 0 : earned - used;
         },
         
         lastCheat: function () {
-            return _.last(this.get('used'));
+            
+            var self = this;
+            
+            if (!_.isArray(self.get('used')))
+            {
+                return;
+            }
+            
+            return _.last(self.get('used'));
         },
         
         nextCheat: function () {
@@ -74,7 +81,7 @@
                 start = moment(self.get('start')).sod(),
                 diff = today.diff(start, 'days'),
                 earned = Math.floor(diff*self.get('cheatsPerRange')/self.get('range')) + 1,
-                used = self.get('used').length;
+                used = _.isArray(self.get('used')) ? self.get('used').length : 0;
             
             if (self.hasCheats())
             {
@@ -96,7 +103,7 @@
             
             var self = this,
                 state = self.getToggleState(),
-                used = self.get('used');
+                used = self.get('used') || [];
             
             if (state === STATES.on)
             {
@@ -112,10 +119,6 @@
                 used: used,
                 count: self.cheats(),
                 status: self.getStatus(state)
-            }, {
-                success: function () {
-                    console.log(self.toJSON());
-                }
             });
             
             return;
@@ -129,23 +132,14 @@
             switch (state)
             {
                 case STATES.on:
-                {
                     status = 'Undo';
-                    
                     break;
-                }
                 case STATES.off:
-                {
                     status = 'Cheat!';
-                    
                     break;
-                }
                 case STATES.locked:
-                {
                     status = moment(self.nextCheat()).from(moment().sod(), true).replace('a ', '1 ');
-                    
                     break;
-                }
             }
             
             return status;
