@@ -1,4 +1,16 @@
+
+
 $(function(){
+    
+    window.isLogging = false;
+    window.$log = $('<div style="position:absolute;right:10px;bottom:0;z-index:99;color:pink;font-size:10px;line-height:10px;" />');
+    
+    window.log = function (val) {
+        if (!window.isLogging) return;
+        $log.prepend('<div>' + val + '</div>');
+    };
+    
+    window.log('dom ready');
     
     var data = [
             {
@@ -56,9 +68,10 @@ $(function(){
     })
     
     document.addEventListener('resume', function(){
-        
+        window.log('resume');
         vices.fetch();
         
     }, false);
     
+    $(document.body).append($log);
 });

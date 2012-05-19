@@ -5,15 +5,13 @@
             off: 'off',
             locked: 'locked'
         },
-        FORMAT = 'YYYY-MM-DD',
-        TODAY = moment().sod().format(FORMAT);
+        FORMAT = 'YYYY-MM-DD';
     
     window.Vice = Backbone.Model.extend({
         
         defaults: {
             state: STATES.off,
             count: 1,
-            start: TODAY,
             cheatsPerRange: 1,
             range: 7
         },
@@ -24,7 +22,7 @@
                 state,
                 status;
             
-            if (self.lastCheat() === TODAY)
+            if (self.lastCheat() === moment().sod().format(FORMAT))
             {
                 state = STATES.on;
             }
@@ -40,9 +38,10 @@
             self.save({
                 state: state,
                 status: self.getStatus(state),
-                count: self.cheats()
+                count: self.cheats(),
+                start: moment().sod().format(FORMAT)
             });
-            
+            window.log('init: ' + JSON.stringify(self.toJSON()));
             return;
         },
         

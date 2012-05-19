@@ -11,12 +11,6 @@
             self.template = JST[self.className];
             self.collection = self.options.collection;
             
-            /*self.$el
-                .css({
-                    height: $(window).height() + 'px'
-                })
-                ;*/
-            
             self.model
                 .bind('change:isCreating', self.change_IsCreating, self)
                 ;
@@ -30,7 +24,7 @@
         },
         
         render: function () {
-            
+            //window.log('render app');
             var self = this;
             
             self.$el

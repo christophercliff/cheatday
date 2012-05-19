@@ -6,7 +6,7 @@ var express = require('express'),
 global.nap = require('nap');
 
 nap({
-    //mode: 'production',
+    mode: 'production',
     publicDir: '/CheatDay/www',
     cdnUrl: 'assets/',
     fingerprint: true,
