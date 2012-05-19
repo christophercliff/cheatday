@@ -41,7 +41,9 @@
                 count: self.cheats(),
                 start: moment().sod().format(FORMAT)
             });
+            
             window.log('init: ' + JSON.stringify(self.toJSON()));
+            
             return;
         },
         
@@ -114,8 +116,11 @@
             }
             
             self.save({
+                used: used
+            });
+            
+            self.save({
                 state: state,
-                used: used,
                 count: self.cheats(),
                 status: self.getStatus(state)
             });
