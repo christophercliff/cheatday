@@ -39,10 +39,10 @@
                 state: state,
                 status: self.getStatus(state),
                 count: self.cheats(),
-                start: moment().sod().format(FORMAT)
+                start: self.get('start') || moment().sod().format(FORMAT)
             });
             
-            window.log('init: ' + JSON.stringify(self.toJSON()));
+            window.log('init: ' + self.get('name') + ' - ' + self.get('status'));
             
             return;
         },

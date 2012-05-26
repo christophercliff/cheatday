@@ -1,15 +1,35 @@
+window.isDebugging = false;
+window.isLogging = false;
+window.log = function (val) {
+    if (!window.isLogging) return;
+    $log.append('<div>' + val + '</div>');
+};
+window.clearLocalStorage = function () {
+    for (var i = 0; i < localStorage.length; i++)
+    {
+        (function(){
+            
+            var key = localStorage.key(i);
+            
+            if (key.indexOf('Vices') < 0)
+            {
+                return;
+            }
+            
+            localStorage.removeItem(key);
+            
+        })();
+    }
+};
 
+if (isDebugging)
+{
+    clearLocalStorage();
+}
 
 $(function(){
     
-    window.isLogging = false;
     window.$log = $('<div style="position:absolute;right:10px;bottom:0;z-index:99;color:pink;font-size:10px;line-height:10px;" />');
-    
-    window.log = function (val) {
-        if (!window.isLogging) return;
-        $log.prepend('<div>' + val + '</div>');
-    };
-    
     window.log('dom ready');
     
     var data = [
@@ -17,9 +37,9 @@ $(function(){
                 name: 'Drink alcohol',
                 cheatsPerRange: 1,
                 range: 7,
-                start: '2012-04-23',
-                used: ['2012-04-24']
-            },
+                start: '2012-05-25',
+                used: ['2012-05-25']
+            }/*,
             {
                 name: 'Smoke cigarettes',
                 cheatsPerRange: 1,
@@ -40,7 +60,7 @@ $(function(){
                 range: 7,
                 start: '2012-04-22',
                 used: ['2012-05-01']
-            }
+            }*/
         ],
         vices = new Vices(),
         appView = new AppView({
@@ -52,24 +72,38 @@ $(function(){
         .html(appView.render().el)
         ;
     
-    vices.fetch({
-        success: function () {
+    var success = function () {
+        if (isDebugging)
+        {
+            vices.each(function(v){
+                v.destroy();
+            });
             
-            if (false)
-            {
-                vices.each(function(v){
-                    v.destroy();
-                });
-                
-                vices.create(data[0]);
-            }
-            
+            vices.create(data[0]);
         }
-    })
+    };
+    
+    if (!isDebugging)
+    {
+        vices.fetch()
+    }
+    else
+    {
+        vices.reset(data);
+    }
     
     document.addEventListener('resume', function(){
+        
         window.log('resume');
-        vices.fetch();
+        
+        if (!isDebugging)
+        {
+            vices.fetch()
+        }
+        else
+        {
+            vices.reset(data);
+        }
         
     }, false);
     
